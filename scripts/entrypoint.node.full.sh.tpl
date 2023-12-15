@@ -10,7 +10,7 @@ sudo pip3 install bzt==$BZT_VERSION
 # LOCUST
 export LOCUST_VERSION="2.15.1"
 sudo pip3 install locust==$LOCUST_VERSION
-
+sudo pip3 install shortuuid
 
 # JMETER
 export MIRROR_HOST=https://archive.apache.org/dist/jmeter
