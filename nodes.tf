@@ -13,7 +13,12 @@ resource "aws_instance" "nodes" {
 
   iam_instance_profile = aws_iam_instance_profile.loadtest.name
 
-
+  user_data = <<-EOF
+          #!/bin/bash
+          echo "${tls_private_key.loadtest.public_key_openssh}" >> /home/ec2-user/.ssh/authorized_keys
+          chmod 600 /home/ec2-user/.ssh/authorized_keys
+          chown -R ec2-user:ec2-user /home/ec2-user/.ssh
+          EOF
   key_name = aws_key_pair.loadtest.key_name
   connection {
     host        = self.private_ip

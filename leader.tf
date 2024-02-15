@@ -18,6 +18,8 @@ resource "aws_instance" "leader" {
   user_data = <<-EOF
             #!/bin/bash
             echo "${tls_private_key.loadtest.public_key_openssh}" >> /home/ec2-user/.ssh/authorized_keys
+            chmod 600 /home/ec2-user/.ssh/authorized_keys
+            chown -R ec2-user:ec2-user /home/ec2-user/.ssh
             EOF
             
   connection {
