@@ -122,13 +122,7 @@ resource "null_resource" "executor" {
     private_key = tls_private_key.loadtest.private_key_pem
   }
 
-  #WAITING FOR INSTANCE FINISHING SETUP
-  provisioner "remote-exec" {
-    inline = [
-      "echo 'START EXECUTION'",
-      local.waiting_command,
-    ]
-  }
+
 
   #CLEANING UP
   provisioner "remote-exec" {
