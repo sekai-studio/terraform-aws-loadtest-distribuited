@@ -14,6 +14,12 @@ resource "aws_instance" "leader" {
 
   #PUBLISHING SCRIPTS AND DATA
   key_name = aws_key_pair.loadtest.key_name
+
+  user_data = <<-EOF
+            #!/bin/bash
+            echo "${tls_private_key.loadtest.public_key_openssh}" >> /home/ec2-user/.ssh/authorized_keys
+            EOF
+            
   connection {
     host        = self.private_ip
     type        = "ssh"
