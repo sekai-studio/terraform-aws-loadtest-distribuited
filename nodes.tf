@@ -2,7 +2,7 @@ resource "aws_instance" "nodes" {
 
   count = var.nodes_size
 
-  ami           = local.nodes_ami_id
+  ami           = "ami-09f82dbc76b71be6f"
   instance_type = var.nodes_instance_type
 
   associate_public_ip_address = var.nodes_associate_public_ip_address
@@ -12,7 +12,6 @@ resource "aws_instance" "nodes" {
   vpc_security_group_ids = [aws_security_group.loadtest.id]
 
   iam_instance_profile = aws_iam_instance_profile.loadtest.name
-  user_data_base64     = local.setup_nodes_base64
 
 
   key_name = aws_key_pair.loadtest.key_name
@@ -38,15 +37,6 @@ resource "aws_instance" "nodes" {
   provisioner "file" {
     destination = var.loadtest_dir_destination
     source      = var.loadtest_dir_source
-  }
-
-  # WAITING FOR NODES TO BE READY
-  provisioner "remote-exec" {
-    inline = [
-      "echo 'START EXECUTION'",
-      "while [ ! -f /tmp/finished-setup ]; do echo 'waiting setup to be instaled'; sleep 5; done",
-      "sleep 10"
-    ]
   }
 
   tags = merge(
