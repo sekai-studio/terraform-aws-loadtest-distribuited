@@ -21,7 +21,6 @@ locals {
   }
 
   executor        = lookup(local.executors, var.executor, "")
-  waiting_command = "while [ ! -f /tmp/finished-setup ]; do echo 'waiting setup to be instaled'; sleep 5; done"
   nodes_ips       = local.executor.nodes_ips
 
   entrypoint = replace(
